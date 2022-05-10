@@ -79,3 +79,36 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+    if request.method == "POST":
+
+        # Ensure profile name was submitted
+        if not request.form.get("profile"):
+            return apology("must provide a profile name", 400)
+
+        # Check that username is not already taken
+        if not request.form.get("username"):
+            return apology("must provide username", 400)
+        search = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        if len(search) > 0:
+            return apology("username already taken", 400)
+
+        # Check password is filled out and same password confirmed
+        if not request.form.get("password"):
+            return apology("must provide password", 400)
+        elif request.form.get("password") != request.form.get("password") != request.form.get("confirmation"):
+            return apology("password does not match", 400)
+        
+        # Store username and password
+        newprofile = request.form.get("profile")
+        newuser = request.form.get("username")
+        newpass = request.form.get("password")
+        newhash = generate_password_hash(newpass, method="pbkdf2:sha256", salt_length=8)
+        db.execute("INSERT INTO users (profile_name, username, hash) VALUES (?, ?, ?)", newprofile, newuser, newhash)
+        return redirect("/")
+    else:
+        return render_template("register.html")
