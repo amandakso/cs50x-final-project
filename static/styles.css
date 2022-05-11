@@ -9,3 +9,61 @@ nav .navbar-brand .blue
 {
     color: #537fbe;
 }
+
+/* Removes bullet points in calendar*/
+.struct
+{
+    list-style-type: none;
+}
+
+/* Month header */
+.month {
+    padding: 70px 25px;
+    width: 100%;
+    background: #1abc9c;
+    text-align: center;
+}
+/* Month list */
+.month ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.month ul li {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Weekdays */
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color: #ddd;
+}
+
+.weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+/* Days */
+.days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+
+.days li {
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #777;
+}
+
