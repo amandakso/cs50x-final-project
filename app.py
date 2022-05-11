@@ -1,6 +1,7 @@
 import os
 
 from cs50 import SQL 
+from datetime import date
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session 
 from tempfile import mkdtemp
@@ -33,7 +34,13 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index(): 
-    return apology("TODO", 400)
+    # Get current time
+    today = date.today()
+    year = today.year
+    month = today.month
+    day = today.day
+    return render_template("index.html", year=year, month=month, day=day)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
