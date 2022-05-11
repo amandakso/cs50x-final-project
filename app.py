@@ -39,7 +39,8 @@ def index():
     year = today.year
     month = today.month
     day = today.day
-    return render_template("index.html", year=year, month=month, day=day)
+    weekday = today.isoweekday()
+    return render_template("index.html", year=year, month=month, day=day, weekday=weekday)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -119,3 +120,8 @@ def register():
         return redirect("/")
     else:
         return render_template("register.html")
+
+
+@app.route("/addevent", methods=["GET", "POST"])
+def addevent():
+    return apology("TODO", 400)
