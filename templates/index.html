@@ -6,9 +6,24 @@
 
 
 {% block main %} 
-{{ year }}
-{{ month }}
-{{ day }}
-{{ weekday }}
+<div class="month">
+    {{ this_month }}
+</div>
+<ul class="weekdays">
+    <li>Monday</li>
+    <li>Tuesday</li>
+    <li>Wednesday</li>
+    <li>Thursday</li>
+    <li>Friday</li>
+    <li>Saturday</li>
+    <li>Sunday</li>
+</ul>
+<ul class="days">
+    {% for row in cal %}
+    {% for row in row %}
+    <li>{{ row }}</li>
+    {% endfor %}
+    {% endfor %}
+</ul>
 <button class="btn btn-primary" type="button"><a href="/addevent">Add Event</a></button>
 {% endblock %}

@@ -1,4 +1,5 @@
 import os
+import calendar 
 
 from cs50 import SQL 
 from datetime import date
@@ -34,13 +35,31 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index(): 
+
+    # Months
+    months = {
+        1: "January",
+        2: "February",
+        3: "March",
+        4: "April",
+        5: "May",
+        6: "June",
+        7: "July",
+        8: "August",
+        9: "September",
+        10: "October",
+        11: "November",
+        12: "December",
+    }
     # Get current time
     today = date.today()
     year = today.year
     month = today.month
+    this_month = months[month]
     day = today.day
     weekday = today.isoweekday()
-    return render_template("index.html", year=year, month=month, day=day, weekday=weekday)
+    cal = calendar.monthcalendar(year,month)
+    return render_template("index.html", cal=cal, year=year, month=month, day=day, this_month=this_month, weekday=weekday)
 
 
 @app.route("/login", methods=["GET", "POST"])
