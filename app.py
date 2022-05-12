@@ -158,6 +158,16 @@ def settings():
 @login_required
 def addevent():
     if request.method == "POST":
-        return apology("TODO", 400)
+
+        # Add checks for valid answers
+
+        title = request.form.get("title")
+        date = request.form.get("date")
+        start = request.form.get("starttime")
+        end = request.form.get("endtime")
+        details = request.form.get("details")
+        account = session.get("user_id")
+        db.execute("INSERT INTO events (creator, title, date, starttime, endtime, details) VALUES(?, ?, ?, ?, ?, ?)", account, title, date, start, end, details)
+        return redirect("/")
     else:
         return render_template("addevent.html")
