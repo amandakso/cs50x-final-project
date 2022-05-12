@@ -148,6 +148,13 @@ def register():
         return render_template("register.html")
 
 
+@app.route("/settings", methods=["GET"])
+@login_required
+def settings():
+    return apology("TODO", 400)
+
+
 @app.route("/addevent", methods=["GET", "POST"])
+@login_required
 def addevent():
     return apology("TODO", 400)
