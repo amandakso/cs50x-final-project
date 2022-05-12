@@ -31,5 +31,21 @@
         {% endfor %}
     {% endfor %}
 </ul>
+
+<div class="mb-3">
+    <select class="form-control mx-auto w-auto" name="month" required>
+        <option disabled selected>Month</option>
+        {% for key, value in months.items() %}
+            <option value="{{ key }}">{{ value }}</option>
+        {% endfor %}
+    </select>
+    <select class="form-control mx-auto w-auto" name="year" required>
+        <option disabled selected>Year</option>
+        {% for row in years %}
+                <option value="{{ row }}">{{ row }}</option>
+        {% endfor %}
+
+    </select>
+</div>
 <button class="btn btn-primary" type="button"><a href="/addevent">Add Event</a></button>
 {% endblock %}

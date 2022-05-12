@@ -51,6 +51,13 @@ def index():
         11: "November",
         12: "December",
     }
+    # Years
+    years = []
+    x = range(1900, 2200, 1)
+    for n in x:
+        years.append(n)
+
+
     # Get current time
     today = date.today()
     year = today.year
@@ -59,7 +66,7 @@ def index():
     day = today.day
     weekday = today.isoweekday()
     cal = calendar.monthcalendar(year,month)
-    return render_template("index.html", cal=cal, year=year, month=month, day=day, this_month=this_month, weekday=weekday)
+    return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, day=day, this_month=this_month, weekday=weekday)
 
 
 @app.route("/login", methods=["GET", "POST"])
