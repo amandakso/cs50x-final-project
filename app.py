@@ -154,7 +154,10 @@ def settings():
     return apology("TODO", 400)
 
 
-@app.route("/addevent")
+@app.route("/addevent", methods=["GET", "POST"])
 @login_required
 def addevent():
-    return render_template("addevent.html")
+    if request.method == "POST":
+        return apology("TODO", 400)
+    else:
+        return render_template("addevent.html")
