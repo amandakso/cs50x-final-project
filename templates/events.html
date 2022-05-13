@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Events
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm">
+                <h3>PAST EVENTS</h3>
+                <ul>
+                {% for row in past %}
+                    <li><strong>{{ row.date }} {{ row.starttime }} - {{ row.endtime }} {{ row.title }}</strong></li>
+                    <li>Event details: {{ row.details }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm">
+                <h3>TODAY'S EVENTS ({{ today }})</h3>
+                <ul>
+                {% for row in current %}
+                <li><strong>{ row.starttime }} - {{ row.endtime }} {{ row.title }}</strong></li>
+                <li>Event details: {{ row.details }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm">
+                <h3>FUTURE EVENTS</h3>
+                <ul>
+                {% for row in future %}
+                    <li><strong>{{ row.date }} {{ row.starttime }} - {{ row.endtime }} {{ row.title }}</strong></li>
+                    <li>Event details: {{ row.details }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

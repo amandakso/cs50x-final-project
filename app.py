@@ -171,3 +171,15 @@ def addevent():
         return redirect("/")
     else:
         return render_template("addevent.html")
+
+@app.route("/events", methods=["GET"])
+@login_required
+def events():
+    today = date.today()
+    account = session.get("user_id")
+    past = db.execute("SELECT title, strftime('%m/%d/%Y', date) AS date,starttime, endtime, details FROM events WHERE creator = ? AND date < ? ORDER BY date AND starttime", account, today)
+    future = db.execute("SELECT title, strftime('%m/%d/%Y', date) AS date,starttime, endtime, details FROM events WHERE creator = ? AND date > ? ORDER BY starttime", account, today)
+    current = db.execute("SELECT title, strftime('%m/%d/%Y', date) AS date, starttime, endtime, details FROM events WHERE creator = ? AND date = ? ORDER BY date AND starttime", account, today)
+    today = today.strftime("%m/%d/%y")
+    
+    return render_template("events.html", today=today, past=past, future=future, current=current)
