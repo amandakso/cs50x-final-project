@@ -148,10 +148,36 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/settings", methods=["GET"])
+@app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
-    return apology("TODO", 400)
+    if request.method == "POST":
+        account = session.get("user_id")
+        if request.form.get("profile") == "1":
+            if not request.form.get("old-profile"):
+                return apology("must enter current profile name", 400)
+            if not request.form.get("new-profile"):
+                return apology("must enter new profile name", 400)
+            current = db.execute("SELECT profile_name FROM users WHERE id = ?", account)
+            if current[0]["profile_name"] != request.form.get("old-profile"):
+                    return apology("incorrect current profile name", 400)
+            db.execute("UPDATE users SET profile_name = ? WHERE id = ?", request.form.get("new-profile"), account)
+            return redirect("/settings")
+        elif request.form.get("pass") == "2":
+            if not request.form.get("old-pass"):
+                return apology("must enter current password", 400)
+            old = db.execute("SELECT hash FROM users WHERE id = ?", account)[0]["hash"]
+            if not check_password_hash(old, request.form.get("old-pass")):
+                return apology("current password is incorrect", 400)
+            if not request.form.get("new-pass") or not request.form.get("confirm-pass") or request.form.get("new-pass") != request.form.get("confirm-pass"):
+                return apology("must enter and confirm new password", 400)
+            newhash = generate_password_hash(request.form.get("new-pass"), method="pbkdf2:sha256", salt_length=8)
+            db.execute("UPDATE users SET hash = ? WHERE id = ?", newhash, account)
+            return redirect("/settings")
+        else: 
+            return apology("Invalid Submission", 400)
+    else:
+        return render_template("settings.html")
 
 
 @app.route("/addevent", methods=["GET", "POST"])
