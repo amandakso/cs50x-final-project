@@ -32,7 +32,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index(): 
 
@@ -53,20 +53,26 @@ def index():
     }
     # Years
     years = []
-    x = range(1900, 2200, 1)
+    x = range(1900, 2201, 1)
     for n in x:
         years.append(n)
 
-
+    if request.method == "POST":
+        month = int(request.form.get("month"))
+        year = int(request.form.get("year"))
+        if month < 1 or month > 12 or year < 1900 or year > 2200:
+            return apology("invalid submission", 400)
+        cal = calendar.monthcalendar(year,month)
+        this_month = months[month]
+        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month)    
+    else:
     # Get current time
-    today = date.today()
-    year = today.year
-    month = today.month
-    this_month = months[month]
-    day = today.day
-    weekday = today.isoweekday()
-    cal = calendar.monthcalendar(year,month)
-    return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, day=day, this_month=this_month, weekday=weekday)
+        today = date.today()
+        year = today.year
+        month = today.month
+        this_month = months[month]
+        cal = calendar.monthcalendar(year,month)
+        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month)
 
 
 @app.route("/login", methods=["GET", "POST"])
