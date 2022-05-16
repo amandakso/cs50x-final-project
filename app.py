@@ -58,8 +58,11 @@ def index():
         years.append(n)
 
     if request.method == "POST":
-        month = int(request.form.get("month"))
-        year = int(request.form.get("year"))
+        try: 
+            month = int(request.form.get("month"))
+            year = int(request.form.get("year"))
+        except ValueError: 
+            return apology("invalid submission", 400)
         if month < 1 or month > 12 or year < 1900 or year > 2200:
             return apology("invalid submission", 400)
         cal = calendar.monthcalendar(year,month)
