@@ -56,18 +56,55 @@ def index():
     x = range(1900, 2201, 1)
     for n in x:
         years.append(n)
+    
+    # Days
+    days = []
+    y = range(1, 32, 1)
+    for n in y:
+        days.append("%02d" % n)
+
 
     if request.method == "POST":
-        try: 
-            month = int(request.form.get("month"))
-            year = int(request.form.get("year"))
-        except ValueError: 
+        if request.form.get("cal") == "2":
+            try: 
+                month = int(request.form.get("month"))
+                year = int(request.form.get("year"))
+            except ValueError: 
+                return apology("invalid submission", 400)
+            if month < 1 or month > 12 or year < 1900 or year > 2200:
+                return apology("invalid submission", 400)
+            cal = calendar.monthcalendar(year,month)
+            this_month = months[month]
+            # Get Event Data
+            if month == 12:
+                search_year = year + 1
+                search_month1 = "01"
+            elif month > 9:
+                search_year = year
+                search_month1 = month
+                search_month2 = month + 1
+            elif month == 9:
+                search_year = year
+                search_month1 = "09"
+                search_month2= "10"
+            else:
+                search_year = year
+                search_month1 = "0" + str(month)
+                search_month2 = "0" + str(month + 1)
+            date1 = str(year) + "-" + search_month1 + "-01"
+            date2 = str(search_year) + "-" + search_month2 + "-01"
+            yearmonth = str(year) + "-" + search_month1
+            events = db.execute("SELECT title, date, starttime, endtime, details, COUNT(date) AS count FROM events WHERE creator = ? and date BETWEEN ? AND ? GROUP BY date", session.get("user_id"), date1, date2)
+
+            num_of_events = []
+            for day in days:
+                current = yearmonth + "-" + day
+                z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
+                num_of_events.append(z) 
+            
+            return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events)    
+        else: 
             return apology("invalid submission", 400)
-        if month < 1 or month > 12 or year < 1900 or year > 2200:
-            return apology("invalid submission", 400)
-        cal = calendar.monthcalendar(year,month)
-        this_month = months[month]
-        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month)    
     else:
     # Get current time
         today = date.today()
@@ -75,7 +112,35 @@ def index():
         month = today.month
         this_month = months[month]
         cal = calendar.monthcalendar(year,month)
-        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month)
+    
+    # Get event data
+        if month == 12:
+            search_year = year + 1
+            search_month1 = "01"
+        elif month > 9:
+            search_year = year
+            search_month1 = month
+            search_month2 = month + 1
+        elif month == 9:
+            search_year = year
+            search_month1 = "09"
+            search_month2= "10"
+        else:
+            search_year = year
+            search_month1 = "0" + str(month)
+            search_month2 = "0" + str(month + 1)
+        date1 = str(year) + "-" + search_month1 + "-01"
+        date2 = str(search_year) + "-" + search_month2 + "-01"
+        yearmonth = str(year) + "-" + search_month1
+        events = db.execute("SELECT title, date, starttime, endtime, details FROM events WHERE creator = ? and date BETWEEN ? AND ?", session.get("user_id"), date1, date2)
+       
+        num_of_events = []
+        for day in days:
+            current = yearmonth + "-" + day
+            z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
+            num_of_events.append(z) 
+
+        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events)
 
 
 @app.route("/login", methods=["GET", "POST"])
