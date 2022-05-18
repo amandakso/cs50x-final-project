@@ -94,7 +94,7 @@ def index():
             date1 = str(year) + "-" + search_month1 + "-01"
             date2 = str(search_year) + "-" + search_month2 + "-01"
             yearmonth = str(year) + "-" + search_month1
-            events = db.execute("SELECT title, date, starttime, endtime, details, COUNT(date) AS count FROM events WHERE creator = ? and date BETWEEN ? AND ? GROUP BY date", session.get("user_id"), date1, date2)
+            events = db.execute("SELECT title, date, starttime, endtime, details FROM events WHERE creator = ? and date BETWEEN ? AND ?", session.get("user_id"), date1, date2)
 
             num_of_events = []
             for day in days:
