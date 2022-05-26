@@ -1,6 +1,5 @@
 import os
 import calendar 
-import json
 
 from cs50 import SQL 
 from datetime import date
@@ -103,9 +102,8 @@ def index():
                 z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
                 num_of_events.append(z) 
             
-            jevents = json.dumps(events)
             
-            return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events, length=length, jevents=jevents)    
+            return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events, length=length)    
         else: 
             return apology("invalid submission", 400)
     else:
@@ -142,10 +140,8 @@ def index():
             current = yearmonth + "-" + day
             z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
             num_of_events.append(z) 
-        
-        jevents = json.dumps(events)
 
-        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events, length=length, jevents=jevents)
+        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events, length=length)
 
 
 @app.route("/login", methods=["GET", "POST"])
