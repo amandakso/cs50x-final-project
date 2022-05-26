@@ -42,35 +42,6 @@
     {% endfor %}
 </ul>
 
-<div> </div>
-<form action="/" method="post">
-    <div class="mb-3">
-        <select class="form-control mx-auto w-auto" name="month" required>
-            <option disabled selected>Month</option>
-            {% for key, value in months.items() %}
-                {% if key == month %}
-                    <option selected value="{{ key }}"> {{ value }}</option>
-                {% else %}
-                    <option value="{{ key }}">{{ value }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <select class="form-control mx-auto w-auto" name="year" required>
-            <option disabled selected>Year</option>
-            {% for row in years %}
-                {% if row == year %}
-                    <option selected value="{{ row }}">{{ row }}</option>
-                {% else %}
-                    <option value="{{ row }}">{{ row }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-        <input type="hidden" name="cal" value="2">
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
-<button class="btn btn-primary" type="button"><a href="/addevent">Add Event</a></button>
-
 <div>This Month's Events</div>
 <table class="table table-striped">
     <thead>
@@ -92,6 +63,35 @@
         {% endfor %}
     </tbody>
 </table>
+<div class="container">
+        <form action="/" method="post">
+            <div class="mb-3">
+                <select class="form-control mx-auto w-auto mb-1" name="month" required>
+                    <option disabled selected>Month</option>
+                    {% for key, value in months.items() %}
+                        {% if key == month %}
+                            <option selected value="{{ key }}"> {{ value }}</option>
+                        {% else %}
+                            <option value="{{ key }}">{{ value }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <select class="form-control mx-auto w-auto mb-1" name="year" required>
+                    <option disabled selected>Year</option>
+                    {% for row in years %}
+                        {% if row == year %}
+                            <option selected value="{{ row }}">{{ row }}</option>
+                        {% else %}
+                            <option value="{{ row }}">{{ row }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="cal" value="2">
+            
+            <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </form>
+</div>
 
       
 
