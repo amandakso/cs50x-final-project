@@ -78,11 +78,12 @@ def index():
             # Get Event Data
             if month == 12:
                 search_year = year + 1
-                search_month1 = "01"
+                search_month1 = "12"
+                search_month2 = "01"
             elif month > 9:
                 search_year = year
-                search_month1 = month
-                search_month2 = month + 1
+                search_month1 = str(month)
+                search_month2 = str(month + 1)
             elif month == 9:
                 search_year = year
                 search_month1 = "09"
