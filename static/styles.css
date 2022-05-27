@@ -5,7 +5,7 @@ nav .navbar-brand
 }
 
 /* Colors for brand */
-nav .navbar-brand .blue
+nav .navbar-brand .color
 {
     color: #537fbe;
 }
@@ -17,10 +17,10 @@ nav .navbar-brand .blue
 }
 
 /* Month header */
-.month {
+#title {
     padding: 70px 25px;
     width: 100%;
-    background: #1abc9c;
+    background: #9873AC;;
     text-align: center;
 }
 /* Month list */

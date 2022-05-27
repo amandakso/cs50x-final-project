@@ -7,7 +7,7 @@
 
 {% block main %} 
 <div class="font-fred">
-<div class="month">
+<div id="title" class="month">
     <ul>
         <li>{{ this_month }} <span>{{ year }}</span></li>
     </ul>
@@ -103,7 +103,30 @@
             </div>
         </form>
 </div>
+<div class="mt-3">
+    <span>Background Color Options: </span>
+    <form id="colorForm" name="colorForm">
+        <span><input type="radio" id="color1" name="colors" value="black">
+        <label for="black">Black </label></span>
+        <span><input type="radio" checked id="color2" name="colors" value="blue">
+        <label for="blue">Blue </label></span>
+        <span><input type="radio" id="color3" name="colors" value="green">
+        <label for="green">Green </label></span>
+        <span><input type="radio" id="color4" name="colors" value="orange">
+        <label for="orange">Orange </label></span>
+        <span><input type="radio" id="color5" name="colors" value="pink">
+        <label for="pink">Pink </label></span>
+        <span><input type="radio" id="color6" name="colors" value="purple">
+        <label for="purple">Purple </label></span>
+        <span><input type="radio" id="color7" name="colors" value="red">
+        <label for="red">Red </label></span>
+        <span><input type="radio" id="color8" name="colors" value="yellow">
+        <label for="yellow">Yellow </label></span>
+    </form>
 </div>
+</div>
+
+
 
       
 
