@@ -30,6 +30,7 @@
     <li>Sat</li>
     <li>Sun</li>
 </ul>
+
 <ul class="struc days">
     {% for row in cal %}
         {% for row in row %}
@@ -39,11 +40,11 @@
                 <li>{{ row }}
                     {% if num_of_events[row - 1] == 1 %}
                     <div>
-                        <button class="show" value="{{ yearmonth }}-{{ row }}"> {{ num_of_events[row - 1] }} Event</button>
+                        <button> {{ num_of_events[row - 1] }} Event</button>
                     </div>
                     {% else %}
                     <div>
-                        <button class="show" value="{{ yearmonth }}-{{ row }}"> {{ num_of_events[row - 1] }} Events</button>
+                        <button> {{ num_of_events[row - 1] }} Events</button>
                     </div>
                     {% endif %}
                 </li>  

@@ -67,12 +67,11 @@ nav .navbar-brand .blue
     color: #777;
 }
 
-@media only screen and (max-width: 600px) {
+@media (max-width: 724px) {
     .days li {
-     padding: 0px;
+        width: 12%;
     }
 }
-
 .font-elite {
     font-family: 'Special Elite', cursive;
 }
