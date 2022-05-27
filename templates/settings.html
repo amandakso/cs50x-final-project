@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<div class="pb-3">Change Profile Name:</div>
+<div class="pb-3 font-fred">Change Profile Name:</div>
 <form action="/settings" method="post">
     <div class="mb-3">
         <input autocomplete="off" class="form-control mx-auto w-auto" name="old-profile" placeholder="Current Profile Name" type="text">
@@ -17,7 +17,7 @@
     <button class="btn btn-primary" type="submit">Change</button>
 </form>
 
-<div class="pt-3 pb-3">Reset Password:</div>
+<div class="pt-3 pb-3 font-fred">Reset Password:</div>
 <form action="/settings" method="post">
     <div class="mb-3">
         <input autocomplete="off" class="form-control mx-auto w-auto" name="old-pass" placeholder="Current Password" type="password">

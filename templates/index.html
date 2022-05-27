@@ -6,12 +6,13 @@
 
 
 {% block main %} 
+<div class="font-fred">
 <div class="month">
     <ul>
         <li>{{ this_month }} <span>{{ year }}</span></li>
     </ul>
 </div>
-<ul class="struc weekdays">
+<ul class="struc weekdays d-none d-lg-block">
     <li>Monday</li>
     <li>Tuesday</li>
     <li>Wednesday</li>
@@ -19,6 +20,15 @@
     <li>Friday</li>
     <li>Saturday</li>
     <li>Sunday</li>
+</ul>
+<ul class="struc weekdays d-lg-none text-nowrap">
+    <li>Mon</li>
+    <li>Tues</li>
+    <li>Wed</li>
+    <li>Thur</li>
+    <li>Fri</li>
+    <li>Sat</li>
+    <li>Sun</li>
 </ul>
 <ul class="struc days">
     {% for row in cal %}
@@ -42,7 +52,7 @@
     {% endfor %}
 </ul>
 
-<div>This Month's Events</div>
+<div id="thismonth" class="mt-4">This Month's Events</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -56,7 +66,7 @@
         {% for row in events %}
             <tr>
                 <td>{{ row.date}}</td>
-                <td>{{ row.starttime }}{{ row.endtime }}</td>
+                <td>{{ row.starttime }} - {{ row.endtime }}</td>
                 <td>{{ row.title }}</td>
                 <td>{{ row.details }}</td>
             </tr>
@@ -91,6 +101,7 @@
             <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>
+</div>
 </div>
 
       
