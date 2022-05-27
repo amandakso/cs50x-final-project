@@ -95,7 +95,6 @@ def index():
             date2 = str(search_year) + "-" + search_month2 + "-01"
             yearmonth = str(year) + "-" + search_month1
             events = db.execute("SELECT title, date, starttime, endtime, details FROM events WHERE creator = ? and date BETWEEN ? AND ?", session.get("user_id"), date1, date2)
-            length = len(events)
             num_of_events = []
             for day in days:
                 current = yearmonth + "-" + day
@@ -103,7 +102,7 @@ def index():
                 num_of_events.append(z) 
             
             
-            return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events, length=length)    
+            return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events)    
         else: 
             return apology("invalid submission", 400)
     else:
@@ -134,14 +133,13 @@ def index():
         date2 = str(search_year) + "-" + search_month2 + "-01"
         yearmonth = str(year) + "-" + search_month1
         events = db.execute("SELECT title, date, starttime, endtime, details FROM events WHERE creator = ? and date BETWEEN ? AND ?", session.get("user_id"), date1, date2)
-        length = len(events)
         num_of_events = []
         for day in days:
             current = yearmonth + "-" + day
             z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
             num_of_events.append(z) 
 
-        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events, length=length)
+        return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events)
 
 
 @app.route("/login", methods=["GET", "POST"])
