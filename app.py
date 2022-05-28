@@ -286,6 +286,7 @@ def addevent():
         details = request.form.get("details")
         account = session.get("user_id")
         db.execute("INSERT INTO events (creator, title, date, starttime, endtime, details) VALUES(?, ?, ?, ?, ?, ?)", account, title, date, start, end, details)
+        flash("New Event Added!")
         return redirect("/")
     else:
         return render_template("addevent.html")
