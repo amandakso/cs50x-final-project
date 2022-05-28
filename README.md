@@ -22,3 +22,10 @@ Some design ideas had to be modified or abandoned due to limiations of tie and/o
 - login.html: login page
 - register.html: regristration page
 - settings.html: update user settings page
+
+#### References:
+For CSS format of monthly calendar:
+
+https://www.w3schools.com/howto/howto_css_calendar.asp
+
+CS50 Finance
