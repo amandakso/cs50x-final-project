@@ -4,9 +4,6 @@ document.colorForm.onclick = function() {
 }
 
 
-
-
-
 function change_color(value) {
     switch (value) {
         case "blue":
