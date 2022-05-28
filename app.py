@@ -146,8 +146,13 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-    # Forget any user_id
-    session.clear()
+    # Forget any user_id, but keeps any flashed messages
+    if session.get("_flashes"):
+        flashes = session.get("_flashes")
+        session.clear()
+        session["_flashes"] = flashes
+    else:
+        session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -170,6 +175,10 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
+        # Welcome Message
+        profile = rows[0]["profile_name"]
+        message = "Welcome " + str(profile) + "!"
+        flash(message)
         # Redirect user to home page
         return redirect("/")
 
@@ -181,11 +190,17 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
+    
     # Forget any user_id
     session.clear()
 
+
+    # Add logout message
+    flash("You have logged out!")
+
+
     # Redirect user to login form
+    
     return redirect("/")
 
 
@@ -217,6 +232,7 @@ def register():
         newpass = request.form.get("password")
         newhash = generate_password_hash(newpass, method="pbkdf2:sha256", salt_length=8)
         db.execute("INSERT INTO users (profile_name, username, hash) VALUES (?, ?, ?)", newprofile, newuser, newhash)
+        flash("You Are Registered!")
         return redirect("/")
     else:
         return render_template("register.html")
@@ -236,6 +252,7 @@ def settings():
             if current[0]["profile_name"] != request.form.get("old-profile"):
                     return apology("incorrect current profile name", 400)
             db.execute("UPDATE users SET profile_name = ? WHERE id = ?", request.form.get("new-profile"), account)
+            flash("Your profile name has been updated!")
             return redirect("/settings")
         elif request.form.get("pass") == "2":
             if not request.form.get("old-pass"):
@@ -247,6 +264,7 @@ def settings():
                 return apology("must enter and confirm new password", 400)
             newhash = generate_password_hash(request.form.get("new-pass"), method="pbkdf2:sha256", salt_length=8)
             db.execute("UPDATE users SET hash = ? WHERE id = ?", newhash, account)
+            flash("Your password has been reset!")
             return redirect("/settings")
         else: 
             return apology("Invalid Submission", 400)
