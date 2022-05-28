@@ -99,7 +99,7 @@ def index():
             num_of_events = []
             for day in days:
                 current = yearmonth + "-" + day
-                z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
+                z = db.execute("SELECT COUNT(date) AS count FROM events WHERE creator= ? and date = ?", session.get("user_id"), current)[0]["count"]
                 num_of_events.append(z) 
             
             
@@ -137,7 +137,7 @@ def index():
         num_of_events = []
         for day in days:
             current = yearmonth + "-" + day
-            z = db.execute("SELECT COUNT(date) AS count FROM events WHERE date = ?", current)[0]["count"]
+            z = db.execute("SELECT COUNT(date) AS count FROM events WHERE creator = ? and date = ?", session.get("user_id"), current)[0]["count"]
             num_of_events.append(z) 
 
         return render_template("index.html", cal=cal, year=year, years=years, month=month, months=months, this_month=this_month, events=events, yearmonth=yearmonth, num_of_events=num_of_events)
